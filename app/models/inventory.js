@@ -16,11 +16,11 @@ const inventorySchema = new mongoose.Schema({
   quantity: {
     type: String,
     required: true
-    },
+  },
   owner: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User'
-    }
+  }
 }, {
   timestamps: true
 })
