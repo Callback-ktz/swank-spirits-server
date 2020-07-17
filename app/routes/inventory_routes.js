@@ -14,7 +14,7 @@ const customErrors = require('../../lib/custom_errors')
 const handle404 = customErrors.handle404
 // we'll use this function to send 401 when a user tries to modify a resource
 // that's owned by someone else
-const requireOwnership = customErrors.requireOwnership
+// const requireOwnership = customErrors.requireOwnership
 
 // this is middleware that will remove blank fields from `req.body`, e.g.
 // { inventory: { title: '', text: 'foo' } } -> { inventory: { text: 'foo' } }
@@ -78,14 +78,14 @@ router.post('/inventory', requireToken, (req, res, next) => {
 router.patch('/inventory/:id', requireToken, removeBlanks, (req, res, next) => {
   // if the client attempts to change the `owner` property by including a new
   // owner, prevent that by deleting that key/value pair
-  delete req.body.inventory.owner
+  // delete req.body.inventory.owner
 
   Inventory.findById(req.params.id)
     .then(handle404)
     .then(inventory => {
       // pass the `req` object and the Mongoose record to `requireOwnership`
       // it will throw an error if the current user isn't the owner
-      requireOwnership(req, inventory)
+      // requireOwnership(req, inventory)
 
       // pass the result of Mongoose's `.update` to the next `.then`
       return inventory.updateOne(req.body.inventory)
@@ -103,7 +103,7 @@ router.delete('/inventory/:id', requireToken, (req, res, next) => {
     .then(handle404)
     .then(inventory => {
       // throw an error if current user doesn't own `inventory`
-      requireOwnership(req, inventory)
+      // requireOwnership(req, inventory)
       // delete the inventory ONLY IF the above didn't throw
       inventory.deleteOne()
     })

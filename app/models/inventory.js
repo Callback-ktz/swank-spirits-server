@@ -1,10 +1,6 @@
 const mongoose = require('mongoose')
 
 const inventorySchema = new mongoose.Schema({
-  code: {
-    type: String,
-    required: true
-  },
   name: {
     type: String,
     required: true
